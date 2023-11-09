@@ -12,5 +12,6 @@ namespace TripApplication.DTO
         public string? RouteName { get; set; }
         public string? RouteFrom { get; set; }
         public string? RouteTo { get; set; }
+        public double? Distance { get; set; }
     }
 }

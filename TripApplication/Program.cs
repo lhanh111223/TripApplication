@@ -14,6 +14,7 @@ namespace TripApplication
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new TripGUI("admin"));
+            //Application.Run(new LoginGUI());
         }
     }
 }

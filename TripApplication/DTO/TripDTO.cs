@@ -12,7 +12,7 @@ namespace TripApplication.DTO
         public string? TripName { get; set; }
         public string TripFrom {  get; set; }
         public string TripTo { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public int? Slot { get; set; }
         public decimal? Price { get; set; }
         public string? LimousinePlate { get; set; }

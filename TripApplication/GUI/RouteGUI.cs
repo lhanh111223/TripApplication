@@ -26,6 +26,7 @@ namespace TripApplication.GUI
 
         private void LoadComboBoxData()
         {
+            numDistance.Value = 0;
             List<Location> listLocation = context.Locations.ToList();
 
             Location chooseDefault = new Location
@@ -74,6 +75,7 @@ namespace TripApplication.GUI
                                                RouteName = route.RouteName,
                                                RouteFrom = route.RouteFromNavigation.LocationName,
                                                RouteTo = route.RouteToNavigation.LocationName,
+                                               Distance = route.Distance
                                            }
                                            ).ToList();
             routeDataView.DataSource = listRouteDTO;
@@ -98,6 +100,7 @@ namespace TripApplication.GUI
                                                    RouteName = route.RouteName,
                                                    RouteFrom = route.RouteFromNavigation.LocationName,
                                                    RouteTo = route.RouteToNavigation.LocationName,
+                                                   Distance = route.Distance
                                                }
                                            ).ToList();
                 if (from.LocationCode != "0" && to.LocationCode == "0")
@@ -142,13 +145,19 @@ namespace TripApplication.GUI
                 }
                 else
                 {
-                    if (routes.Count == 0)
+                    if ((double)numDistance.Value <= 0)
+                    {
+                        MessageBox.Show("Distance must be greater than 0 (km)");
+                    }
+                    else if (routes.Count == 0)
                     {
                         Route route = new Route
                         {
                             RouteFrom = from.LocationCode,
                             RouteTo = to.LocationCode,
-                            RouteName = $"{from.LocationName} - {to.LocationName}"
+                            RouteName = $"{from.LocationName} - {to.LocationName}",
+                            Distance = (double)numDistance.Value
+
                         };
                         context.Routes.Add(route);
                         context.SaveChanges();
@@ -168,7 +177,6 @@ namespace TripApplication.GUI
             Location from = (Location)cboFrom.SelectedItem;
             Location to = (Location)cboTo.SelectedItem;
             List<Route> routes = context.Routes.Where(r => r.RouteFrom == from.LocationCode && r.RouteTo == to.LocationCode).ToList();
-
             if (route.RouteFrom == from.LocationCode && route.RouteTo == to.LocationCode)
             {
                 MessageBox.Show("This route has been updated successfully !!");
@@ -186,6 +194,7 @@ namespace TripApplication.GUI
                 route.RouteFrom = cboFrom.SelectedValue.ToString();
                 route.RouteTo = cboTo.SelectedValue.ToString();
                 route.RouteName = $"{from.LocationName} - {to.LocationName}";
+                route.Distance = (double)numDistance.Value;
 
                 context.Routes.Update(route);
                 context.SaveChanges();
@@ -236,6 +245,7 @@ namespace TripApplication.GUI
             textId.Text = row.Cells["RouteId"].Value.ToString();
             cboFrom.SelectedItem = context.Locations.FirstOrDefault(l => l.LocationName == row.Cells["RouteFrom"].Value.ToString());
             cboTo.SelectedItem = context.Locations.FirstOrDefault(l => l.LocationName == row.Cells["RouteTo"].Value.ToString());
+            numDistance.Value = Decimal.Parse(row.Cells["Distance"].Value.ToString());
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -243,6 +253,7 @@ namespace TripApplication.GUI
             textId.Text = String.Empty;
             cboFrom.SelectedIndex = 0;
             cboTo.SelectedIndex = 0;
+            numDistance.Value = 0;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -250,6 +261,37 @@ namespace TripApplication.GUI
             MainGUI mainGUI = new MainGUI("admin");
             mainGUI.Show();
             this.Close();
+        }
+
+        private void cboFrom_Leave(object sender, EventArgs e)
+        {
+            string inputValue = cboFrom.Text;
+            Location matchingLocation = context.Locations.FirstOrDefault(l => l.LocationName == inputValue);
+            if (matchingLocation == null)
+            {
+                MessageBox.Show("Please choose the valid Location !!", "ERROR");
+                cboFrom.SelectedIndex = 0;
+            }
+        }
+
+        private void cboTo_Leave(object sender, EventArgs e)
+        {
+            string inputValue = cboTo.Text;
+            Location matchingLocation = context.Locations.FirstOrDefault(l => l.LocationName == inputValue);
+            if (matchingLocation == null)
+            {
+                MessageBox.Show("Please choose the valid Location !!", "ERROR");
+                cboTo.SelectedIndex = 0;
+            }
+        }
+
+        private void numDistance_Leave(object sender, EventArgs e)
+        {
+            if (numDistance.Value <= 0)
+            {
+                MessageBox.Show("Distance must be greater than 0 !!", "ERROR");
+                numDistance.Value = 0;
+            }
         }
     }
 }

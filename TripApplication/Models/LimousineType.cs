@@ -12,6 +12,7 @@ namespace TripApplication.Models
 
         public int Id { get; set; }
         public string? Type { get; set; }
+        public decimal? UnitPrice { get; set; }
 
         public virtual ICollection<Limousine> Limousines { get; set; }
     }

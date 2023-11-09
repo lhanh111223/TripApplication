@@ -30,6 +30,9 @@
         {
             routeDataView = new DataGridView();
             groupBox1 = new GroupBox();
+            label5 = new Label();
+            numDistance = new NumericUpDown();
+            label4 = new Label();
             btnRefresh = new Button();
             textId = new TextBox();
             label3 = new Label();
@@ -43,6 +46,7 @@
             labelAll = new Label();
             ((System.ComponentModel.ISupportInitialize)routeDataView).BeginInit();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numDistance).BeginInit();
             SuspendLayout();
             // 
             // routeDataView
@@ -60,6 +64,9 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label5);
+            groupBox1.Controls.Add(numDistance);
+            groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(btnRefresh);
             groupBox1.Controls.Add(textId);
             groupBox1.Controls.Add(label3);
@@ -71,14 +78,42 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(524, 169);
+            groupBox1.Size = new Size(770, 169);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "Route Info";
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(688, 73);
+            label5.Name = "label5";
+            label5.Size = new Size(25, 15);
+            label5.TabIndex = 11;
+            label5.Text = "KM";
+            // 
+            // numDistance
+            // 
+            numDistance.Location = new Point(608, 70);
+            numDistance.Maximum = new decimal(new int[] { 2000, 0, 0, 0 });
+            numDistance.Name = "numDistance";
+            numDistance.Size = new Size(74, 23);
+            numDistance.TabIndex = 10;
+            numDistance.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            numDistance.Leave += numDistance_Leave;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(544, 73);
+            label4.Name = "label4";
+            label4.Size = new Size(58, 15);
+            label4.TabIndex = 9;
+            label4.Text = "Distance: ";
+            // 
             // btnRefresh
             // 
-            btnRefresh.Location = new Point(349, 130);
+            btnRefresh.Location = new Point(466, 140);
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(67, 23);
             btnRefresh.TabIndex = 8;
@@ -105,7 +140,7 @@
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(241, 130);
+            btnSearch.Location = new Point(358, 140);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(75, 23);
             btnSearch.TabIndex = 5;
@@ -115,7 +150,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(140, 130);
+            btnAdd.Location = new Point(257, 140);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(75, 23);
             btnAdd.TabIndex = 0;
@@ -130,6 +165,7 @@
             cboTo.Name = "cboTo";
             cboTo.Size = new Size(135, 23);
             cboTo.TabIndex = 3;
+            cboTo.Leave += cboTo_Leave;
             // 
             // cboFrom
             // 
@@ -138,6 +174,7 @@
             cboFrom.Name = "cboFrom";
             cboFrom.Size = new Size(135, 23);
             cboFrom.TabIndex = 2;
+            cboFrom.Leave += cboFrom_Leave;
             // 
             // label2
             // 
@@ -191,6 +228,7 @@
             ((System.ComponentModel.ISupportInitialize)routeDataView).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numDistance).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -210,5 +248,8 @@
         private TextBox textId;
         private Label label3;
         private Button btnRefresh;
+        private NumericUpDown numDistance;
+        private Label label4;
+        private Label label5;
     }
 }

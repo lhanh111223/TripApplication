@@ -161,5 +161,33 @@ namespace TripApplication.GUI
             RefreshLimoData();
             textFilter.Text = textFilter.Text;
         }
+
+        private void numRow_Leave(object sender, EventArgs e)
+        {
+            if(numRow.Value < 5)
+            {
+                MessageBox.Show("The number of seats row must be between 5 to 10");
+                numRow.Value = 5;
+            }
+            if(numRow.Value > 10)
+            {
+                MessageBox.Show("The number of seats row must be between 5 to 10");
+                numRow.Value = 10;
+            }
+        }
+
+        private void numCol_Leave(object sender, EventArgs e)
+        {
+            if (numCol.Value < 2)
+            {
+                MessageBox.Show("The number of seats row must be between 2 to 3");
+                numCol.Value = 2;
+            }
+            if (numCol.Value > 3)
+            {
+                MessageBox.Show("The number of seats row must be between 2 to 3");
+                numCol.Value = 3;
+            }
+        }
     }
 }

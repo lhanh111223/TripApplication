@@ -43,8 +43,8 @@ namespace TripApplication.GUI
             {
                 MessageBox.Show("This car is alreadt exists !!", "ERROR");
             }
-            else if(lim == null && textName.TextLength > 0 
-                && Regex.IsMatch(textPlate.Text, regexPattern) 
+            else if (lim == null && textName.TextLength > 0
+                && Regex.IsMatch(textPlate.Text, regexPattern)
                 && (int)numRow.Value > 0 && (int)numCol.Value > 0)
             {
                 Limousine limToAdd = new Limousine
@@ -68,6 +68,34 @@ namespace TripApplication.GUI
             {
                 MessageBox.Show("Please check again Name must not empty, Plate must be same format with example" +
                     ", Number Row and Col must be > 0", "ERROR");
+            }
+        }
+
+        private void numRow_Leave(object sender, EventArgs e)
+        {
+            if (numRow.Value < 5)
+            {
+                MessageBox.Show("The number of seats row must be between 5 to 10");
+                numRow.Value = 5;
+            }
+            if (numRow.Value > 10)
+            {
+                MessageBox.Show("The number of seats row must be between 5 to 10");
+                numRow.Value = 10;
+            }
+        }
+
+        private void numCol_Leave(object sender, EventArgs e)
+        {
+            if (numCol.Value < 2)
+            {
+                MessageBox.Show("The number of seats row must be between 2 to 3");
+                numCol.Value = 2;
+            }
+            if (numCol.Value > 3)
+            {
+                MessageBox.Show("The number of seats row must be between 2 to 3");
+                numCol.Value = 3;
             }
         }
     }

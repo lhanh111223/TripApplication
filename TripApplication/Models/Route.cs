@@ -14,6 +14,7 @@ namespace TripApplication.Models
         public string? RouteName { get; set; }
         public string? RouteFrom { get; set; }
         public string? RouteTo { get; set; }
+        public double? Distance { get; set; }
 
         public virtual Location? RouteFromNavigation { get; set; }
         public virtual Location? RouteToNavigation { get; set; }

@@ -11,7 +11,9 @@ namespace TripApplication.Models
         public string? Phone { get; set; }
         public string? SeatsStatus { get; set; }
         public decimal? Amount { get; set; }
+        public string? CreatedBy { get; set; }
 
+        public virtual Account? CreatedByNavigation { get; set; }
         public virtual Trip? Trip { get; set; }
     }
 }

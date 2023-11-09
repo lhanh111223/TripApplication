@@ -75,7 +75,9 @@ namespace TripApplication.GUI
                     LimousineType = trip.Limousine.Type == 1 ? "NORMAL" : "VIP",
                     Status = trip.Status,
                 }
-                ).ToList();
+                )
+                .OrderByDescending(t => t.Date)
+                .ToList();
             return listTrip;
         }
 
@@ -119,10 +121,6 @@ namespace TripApplication.GUI
             }
         }
 
-        //=============================================================================================
-
-
-        //==============================================================================================
 
         private void LoadComboBox()
         {
@@ -163,7 +161,7 @@ namespace TripApplication.GUI
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-
+            checkSeat.Visible = true;
             Location from = (Location)cboFrom.SelectedItem;
             Location to = (Location)cboTo.SelectedItem;
 
@@ -209,6 +207,8 @@ namespace TripApplication.GUI
         {
             RefreshTripDataView();
             LoadTripData();
+            checkSeat.Visible = false;
+            checkSeat.Checked = false;
         }
 
         private void tripDataView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -220,6 +220,67 @@ namespace TripApplication.GUI
             dtpDate.Value = DateTime.Parse(row.Cells["Date"].Value.ToString());
             radioNormal.Checked = radioNormal.Text == row.Cells["LimousineType"].Value.ToString();
             radioVip.Checked = radioVip.Text == row.Cells["LimousineType"].Value.ToString();
+        }
+
+        private void checkSeat_CheckedChanged(object sender, EventArgs e)
+        {
+            List<TripDTO> routes = (List<TripDTO>)tripDataView.DataSource;
+            List<TripDTO> temp = new List<TripDTO>();
+            if (checkSeat.Checked)
+            {
+                temp = (List<TripDTO>)routes.Where(r => r.Status == 1).ToList();
+                tripDataView.DataSource = temp;
+            }
+            else
+            {
+                btnSearch_Click(sender, e);
+            }
+
+        }
+
+        private void tripDataView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                if (tripDataView.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
+                {
+                    if (tripDataView.Columns[e.ColumnIndex].HeaderText == "Edit")
+                    {
+                        int Id = int.Parse(tripDataView.Rows[e.RowIndex].Cells["TripId"].Value.ToString());
+                        TripDTO trip = GetListTripDTO().Where(t => t.TripId == Id).FirstOrDefault();
+                        AddEditTripGUI t = new AddEditTripGUI(trip);
+                        t.ShowDialog();
+                    }
+                }
+            }
+        }
+
+        private void cboFrom_Leave(object sender, EventArgs e)
+        {
+            string inputValue = cboFrom.Text;
+            Location matchingLocation = context.Locations.FirstOrDefault(l => l.LocationName == inputValue);
+            if (matchingLocation == null)
+            {
+                MessageBox.Show("Please choose the valid Location !!", "ERROR");
+                cboFrom.SelectedIndex = 0;
+            }
+        }
+
+        private void cboTo_Leave(object sender, EventArgs e)
+        {
+            string inputValue = cboTo.Text;
+            Location matchingLocation = context.Locations.FirstOrDefault(l => l.LocationName == inputValue);
+            if (matchingLocation == null)
+            {
+                MessageBox.Show("Please choose the valid Location !!", "ERROR");
+                cboTo.SelectedIndex = 0;
+            }
+        }
+
+        private void btnAddNew_Click(object sender, EventArgs e)
+        {
+            AddEditTripGUI trip = new AddEditTripGUI();
+            trip.ShowDialog();
         }
     }
 }

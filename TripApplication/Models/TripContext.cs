@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace TripApplication.Models
 {
@@ -29,10 +28,7 @@ namespace TripApplication.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var conf = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-                optionsBuilder.UseSqlServer(conf.GetConnectionString("DefaultConnection"));
+                optionsBuilder.UseSqlServer("server=localhost; database=TripManagement; Integrated security=true; TrustServerCertificate=true");
             }
         }
 
@@ -67,6 +63,10 @@ namespace TripApplication.Models
                     .HasColumnType("money")
                     .HasColumnName("amount");
 
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(50)
+                    .HasColumnName("created_by");
+
                 entity.Property(e => e.Customer)
                     .HasMaxLength(50)
                     .HasColumnName("customer");
@@ -78,6 +78,11 @@ namespace TripApplication.Models
                 entity.Property(e => e.SeatsStatus).HasColumnName("seatsStatus");
 
                 entity.Property(e => e.TripId).HasColumnName("trip_id");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.Bookings)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .HasConstraintName("FK_Booking_Account");
 
                 entity.HasOne(d => d.Trip)
                     .WithMany(p => p.Bookings)
@@ -120,6 +125,10 @@ namespace TripApplication.Models
                 entity.Property(e => e.Type)
                     .HasMaxLength(50)
                     .HasColumnName("type");
+
+                entity.Property(e => e.UnitPrice)
+                    .HasColumnType("money")
+                    .HasColumnName("unit_price");
             });
 
             modelBuilder.Entity<Location>(entity =>
@@ -142,6 +151,8 @@ namespace TripApplication.Models
                 entity.ToTable("Route");
 
                 entity.Property(e => e.RouteId).HasColumnName("route_id");
+
+                entity.Property(e => e.Distance).HasColumnName("distance");
 
                 entity.Property(e => e.RouteFrom)
                     .HasMaxLength(10)
@@ -170,6 +181,10 @@ namespace TripApplication.Models
 
                 entity.Property(e => e.TripId).HasColumnName("trip_id");
 
+                entity.Property(e => e.CreateBy)
+                    .HasMaxLength(50)
+                    .HasColumnName("create_by");
+
                 entity.Property(e => e.Date)
                     .HasColumnType("date")
                     .HasColumnName("date");
@@ -185,6 +200,11 @@ namespace TripApplication.Models
                 entity.Property(e => e.Slot).HasColumnName("slot");
 
                 entity.Property(e => e.Status).HasColumnName("status");
+
+                entity.HasOne(d => d.CreateByNavigation)
+                    .WithMany(p => p.Trips)
+                    .HasForeignKey(d => d.CreateBy)
+                    .HasConstraintName("FK_Trip_Account");
 
                 entity.HasOne(d => d.Limousine)
                     .WithMany(p => p.Trips)
