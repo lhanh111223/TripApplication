@@ -54,6 +54,7 @@
             routeDataView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             routeDataView.Location = new Point(12, 202);
             routeDataView.Name = "routeDataView";
+            routeDataView.ReadOnly = true;
             routeDataView.RowHeadersWidth = 70;
             routeDataView.RowTemplate.Height = 25;
             routeDataView.Size = new Size(770, 211);
@@ -154,7 +155,7 @@
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(75, 23);
             btnAdd.TabIndex = 0;
-            btnAdd.Text = "Save Route";
+            btnAdd.Text = "Add Route";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
             // 
@@ -218,6 +219,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            ControlBox = false;
             Controls.Add(labelAll);
             Controls.Add(btnBack);
             Controls.Add(groupBox1);

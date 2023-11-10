@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            label8 = new Label();
+            label2 = new Label();
             btnDelete = new Button();
             numCol = new NumericUpDown();
             numRow = new NumericUpDown();
@@ -48,8 +50,6 @@
             textFilter = new TextBox();
             label7 = new Label();
             btnAdd = new Button();
-            label2 = new Label();
-            label8 = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numCol).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRow).BeginInit();
@@ -80,6 +80,26 @@
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Limousine Info";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.ForeColor = SystemColors.ControlDarkDark;
+            label8.Location = new Point(567, 59);
+            label8.Name = "label8";
+            label8.Size = new Size(60, 15);
+            label8.TabIndex = 16;
+            label8.Text = "* ( 2 -> 3 )";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.ForeColor = SystemColors.ControlDarkDark;
+            label2.Location = new Point(567, 27);
+            label2.Name = "label2";
+            label2.Size = new Size(63, 15);
+            label2.TabIndex = 8;
+            label2.Text = "*( 5 -> 10 )";
             // 
             // btnDelete
             // 
@@ -267,31 +287,12 @@
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.ForeColor = SystemColors.ControlDarkDark;
-            label2.Location = new Point(567, 27);
-            label2.Name = "label2";
-            label2.Size = new Size(63, 15);
-            label2.TabIndex = 8;
-            label2.Text = "*( 5 -> 10 )";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.ForeColor = SystemColors.ControlDarkDark;
-            label8.Location = new Point(567, 59);
-            label8.Name = "label8";
-            label8.Size = new Size(60, 15);
-            label8.TabIndex = 16;
-            label8.Text = "* ( 2 -> 3 )";
-            // 
             // LimousineGUI
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(724, 406);
+            ControlBox = false;
             Controls.Add(btnAdd);
             Controls.Add(label7);
             Controls.Add(textFilter);

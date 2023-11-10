@@ -13,8 +13,8 @@ namespace TripApplication
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new TripGUI("admin"));
-            //Application.Run(new LoginGUI());
+            //Application.Run(new BookingGUI("admin", "admin", 1));
+            Application.Run(new LoginGUI());
         }
     }
 }

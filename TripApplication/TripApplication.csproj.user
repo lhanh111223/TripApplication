@@ -7,6 +7,15 @@
     <Compile Update="GUI\AddLimousineGUI.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="GUI\BookingAddGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GUI\BookingDetailGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="GUI\BookingGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="GUI\LimousineGUI.cs">
       <SubType>Form</SubType>
     </Compile>

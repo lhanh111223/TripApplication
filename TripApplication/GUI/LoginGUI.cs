@@ -18,7 +18,7 @@ namespace TripApplication
             {
                 if (user.Role != null)
                 {
-                    MainGUI mainGUI = new MainGUI(user.Role);
+                    MainGUI mainGUI = new MainGUI(user.Role, username);
                     mainGUI.Show();
                     this.Hide();
                 }

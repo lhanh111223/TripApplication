@@ -17,6 +17,7 @@ namespace TripApplication.GUI
     {
         private readonly TripContext context = new TripContext();
         private string role;
+        private string username;
         private static List<SlotDTO> slots = new List<SlotDTO>
         {
             new SlotDTO
@@ -50,10 +51,58 @@ namespace TripApplication.GUI
             LoadComboBox();
         }
 
+        public TripGUI(string role, string username)
+        {
+            this.role = role;
+            this.username = username;
+            InitializeComponent();
+            LoadTripData();
+            LoadComboBox();
+            EnableButton();
+        }
+
+        private void EnableButton()
+        {
+            if (this.role == "admin")
+            {
+                btnAddNew.Visible = true;
+            }
+            else if (this.role == "staff")
+            {
+                btnAddNew.Visible = false;
+            }
+        }
+
         private void LoadTripData()
         {
-            List<TripDTO> listTrip = GetListTripDTO();
-            tripDataView.DataSource = listTrip;
+            List<TripDTO> listTrip = (
+                from trip in context.Trips.Include(t => t.Route).Include(t => t.Limousine).ToList()
+                select new TripDTO
+                {
+                    TripId = trip.TripId,
+                    TripName = trip.Route.RouteName,
+                    TripFrom = trip.Route.RouteFrom,
+                    TripTo = trip.Route.RouteTo,
+                    Date = trip.Date,
+                    Slot = trip.Slot,
+                    Price = trip.Price,
+                    LimousinePlate = trip.Limousine.Plate,
+                    LimousineType = trip.Limousine.Type == 1 ? "NORMAL" : "VIP",
+                    Status = trip.Status,
+                }
+                )
+                .OrderByDescending(t => t.Date)
+                .ToList();
+            if (this.role == "admin")
+            {
+                tripDataView.DataSource = listTrip;
+            }
+            else if (this.role == "staff")
+            {
+                tripDataView.DataSource = listTrip.Where(t => t.Date >= DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy")) && (t.Status == 1 || t.Status == 2))
+                    .OrderBy(t => t.Date)
+                    .ToList();
+            }
             HideColumns();
             AddColumns();
         }
@@ -119,11 +168,21 @@ namespace TripApplication.GUI
                     UseColumnTextForButtonValue = true
                 });
             }
+            else if (this.role == "staff")
+            {
+                tripDataView.Columns.Add(new DataGridViewButtonColumn
+                {
+                    Name = "Started",
+                    Text = "Started",
+                    UseColumnTextForButtonValue = true
+                });
+            }
         }
 
 
         private void LoadComboBox()
         {
+            checkSeat.Visible = false;
             List<Location> listLocation = context.Locations.ToList();
 
             cboFrom.DataSource = new List<Location>(listLocation);
@@ -161,7 +220,7 @@ namespace TripApplication.GUI
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            checkSeat.Visible = true;
+            //checkSeat.Visible = true;
             Location from = (Location)cboFrom.SelectedItem;
             Location to = (Location)cboTo.SelectedItem;
 
@@ -169,6 +228,12 @@ namespace TripApplication.GUI
             listTrip = listTrip.Where(t => t.TripFrom == from.LocationCode && t.TripTo == to.LocationCode
             && t.Date == DateTime.Parse(dtpDate.Value.ToString("MM/dd/yyyy")))
                 .ToList();
+            if (this.role == "staff")
+            {
+                listTrip = listTrip.Where(t => t.Date >= DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy")) && (t.Status == 1 || t.Status == 2))
+                    .OrderBy(t => t.Date)
+                    .ToList();
+            }
 
             if ((int)cboSlot.SelectedValue == 0)
             {
@@ -207,7 +272,7 @@ namespace TripApplication.GUI
         {
             RefreshTripDataView();
             LoadTripData();
-            checkSeat.Visible = false;
+            //checkSeat.Visible = false;
             checkSeat.Checked = false;
         }
 
@@ -233,7 +298,7 @@ namespace TripApplication.GUI
             }
             else
             {
-                btnSearch_Click(sender, e);
+                btnShowAll_Click(sender, e);
             }
 
         }
@@ -249,7 +314,47 @@ namespace TripApplication.GUI
                         int Id = int.Parse(tripDataView.Rows[e.RowIndex].Cells["TripId"].Value.ToString());
                         TripDTO trip = GetListTripDTO().Where(t => t.TripId == Id).FirstOrDefault();
                         AddEditTripGUI t = new AddEditTripGUI(trip);
-                        t.ShowDialog();
+                        this.Close();
+                        t.Show();
+
+
+                    }
+                    else if (tripDataView.Columns[e.ColumnIndex].HeaderText == "Delete")
+                    {
+                        int Id = int.Parse(tripDataView.Rows[e.RowIndex].Cells["TripId"].Value.ToString());
+                        Trip removeTrip = context.Trips.Find(Id);
+                        if (removeTrip != null && MessageBox.Show("Do you want to delete this trip ?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            context.Trips.Remove(removeTrip);
+                            context.SaveChanges();
+                            MessageBox.Show("Deleted successfully");
+                            RefreshTripDataView();
+                            LoadTripData();
+                        }
+                    }
+                    else if (tripDataView.Columns[e.ColumnIndex].HeaderText == "Bookings")
+                    {
+                        int Id = Convert.ToInt32(tripDataView.Rows[e.RowIndex].Cells["TripId"].Value);
+                        BookingGUI gui = new BookingGUI(this.role, this.username, Id);
+                        this.Close();
+                        gui.Show();
+                    }
+                    else if (tripDataView.Columns[e.ColumnIndex].HeaderText == "Started")
+                    {
+                        int Id = Convert.ToInt32(tripDataView.Rows[e.RowIndex].Cells["TripId"].Value);
+                        Trip t = context.Trips.Find(Id);
+                        if (t.Date == DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy")))
+                        {
+                            if (MessageBox.Show("This trip has been started ?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            {
+                                t.Status = 3;
+                                context.Trips.Update(t);
+                                context.SaveChanges();
+                                RefreshTripDataView();
+                                LoadTripData();
+                            }
+                        }
+
                     }
                 }
             }
@@ -281,6 +386,17 @@ namespace TripApplication.GUI
         {
             AddEditTripGUI trip = new AddEditTripGUI();
             trip.ShowDialog();
+            RefreshTripDataView();
+            LoadTripData();
+
         }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            MainGUI main = new MainGUI(this.role, this.username);
+            main.Show();
+            this.Close();
+        }
+
     }
 }

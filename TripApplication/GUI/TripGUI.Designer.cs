@@ -54,9 +54,12 @@
             // 
             // tripDataView
             // 
+            tripDataView.AllowUserToAddRows = false;
+            tripDataView.AllowUserToDeleteRows = false;
             tripDataView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tripDataView.Location = new Point(12, 272);
             tripDataView.Name = "tripDataView";
+            tripDataView.ReadOnly = true;
             tripDataView.RowTemplate.Height = 25;
             tripDataView.Size = new Size(957, 398);
             tripDataView.TabIndex = 0;
@@ -163,7 +166,6 @@
             checkSeat.TabIndex = 8;
             checkSeat.Text = "Only shows trips with available tickets";
             checkSeat.UseVisualStyleBackColor = true;
-            checkSeat.Visible = false;
             checkSeat.CheckedChanged += checkSeat_CheckedChanged;
             // 
             // label3
@@ -222,12 +224,13 @@
             // 
             // btnBack
             // 
-            btnBack.Location = new Point(778, 676);
+            btnBack.Location = new Point(901, 676);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(70, 25);
             btnBack.TabIndex = 15;
             btnBack.Text = "Back";
             btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
             // 
             // btnAddNew
             // 
@@ -256,6 +259,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(983, 703);
+            ControlBox = false;
             Controls.Add(label5);
             Controls.Add(btnAddNew);
             Controls.Add(btnBack);

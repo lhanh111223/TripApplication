@@ -85,6 +85,7 @@ namespace TripApplication.GUI
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            UnableUpdate();
             Location from = (Location)cboFrom.SelectedItem;
             Location to = (Location)cboTo.SelectedItem;
             if (from.LocationCode == "0" && to.LocationCode == "0")
@@ -241,6 +242,7 @@ namespace TripApplication.GUI
         // click cell
         private void routeDataView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            UnableUpdate();
             DataGridViewRow row = routeDataView.Rows[e.RowIndex];
             textId.Text = row.Cells["RouteId"].Value.ToString();
             cboFrom.SelectedItem = context.Locations.FirstOrDefault(l => l.LocationName == row.Cells["RouteFrom"].Value.ToString());
@@ -250,6 +252,8 @@ namespace TripApplication.GUI
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            EnableAdd();
+            LoadRouteData();
             textId.Text = String.Empty;
             cboFrom.SelectedIndex = 0;
             cboTo.SelectedIndex = 0;
@@ -258,7 +262,7 @@ namespace TripApplication.GUI
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            MainGUI mainGUI = new MainGUI("admin");
+            MainGUI mainGUI = new MainGUI("admin", "admin");
             mainGUI.Show();
             this.Close();
         }
@@ -292,6 +296,21 @@ namespace TripApplication.GUI
                 MessageBox.Show("Distance must be greater than 0 !!", "ERROR");
                 numDistance.Value = 0;
             }
+        }
+
+        private void UnableUpdate()
+        {
+            btnAdd.Enabled = false;
+            cboFrom.Enabled = false;
+            cboTo.Enabled = false;
+            numDistance.Enabled = false;
+        }
+        private void EnableAdd()
+        {
+            btnAdd.Enabled = !false;
+            cboFrom.Enabled = !false;
+            cboTo.Enabled = !false;
+            numDistance.Enabled = !false;
         }
     }
 }

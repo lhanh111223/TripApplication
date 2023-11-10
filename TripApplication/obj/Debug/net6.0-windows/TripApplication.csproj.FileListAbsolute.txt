@@ -65,3 +65,6 @@ D:\FALL_23\PRN211\GroupProject\TripApplication\TripApplication\obj\Debug\net6.0-
 D:\FALL_23\PRN211\GroupProject\TripApplication\TripApplication\obj\Debug\net6.0-windows\TripApplication.GUI.RouteGUI.resources
 D:\FALL_23\PRN211\GroupProject\TripApplication\TripApplication\obj\Debug\net6.0-windows\TripApplication.GUI.TripGUI.resources
 D:\FALL_23\PRN211\GroupProject\TripApplication\TripApplication\obj\Debug\net6.0-windows\TripApplication.Properties.Resources.resources
+D:\FALL_23\PRN211\GroupProject\TripApplication\TripApplication\obj\Debug\net6.0-windows\TripApplication.GUI.BookingGUI.resources
+D:\FALL_23\PRN211\GroupProject\TripApplication\TripApplication\obj\Debug\net6.0-windows\TripApplication.GUI.BookingDetailGUI.resources
+D:\FALL_23\PRN211\GroupProject\TripApplication\TripApplication\obj\Debug\net6.0-windows\TripApplication.GUI.BookingAddGUI.resources

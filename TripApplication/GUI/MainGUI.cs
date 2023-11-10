@@ -13,12 +13,29 @@ namespace TripApplication.GUI
     public partial class MainGUI : Form
     {
         private string role;
-        public MainGUI(string role)
+        private string username;
+
+        public MainGUI(string role, string username)
         {
-            InitializeComponent();
             this.role = role;
-            labelHello.Text = $"Hello, {role}";
-            logoutadminToolStripMenuItem.Text = $"Logout ({role})";
+            this.username = username;
+            InitializeComponent();
+            labelHello.Text = $"Hello, {username}";
+            logoutadminToolStripMenuItem.Text = $"Logout ({username})";
+            checkButton();
+        }
+
+        private void checkButton()
+        {
+            if (this.role == "admin")
+            {
+            }
+            else if (this.role == "staff")
+            {
+                btnLimousine.Visible = false;
+                btnRoute.Visible = false;
+                btnTrip.Text = "Bookings";
+            }
         }
 
         private void logoutadminToolStripMenuItem_Click(object sender, EventArgs e)
@@ -45,9 +62,14 @@ namespace TripApplication.GUI
 
         private void btnTrip_Click(object sender, EventArgs e)
         {
-            TripGUI trip = new TripGUI();
-            trip.Show();    
+            TripGUI trip = new TripGUI(this.role, this.username);
+            trip.Show();
             this.Close();
+        }
+
+        private void btnBooking_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

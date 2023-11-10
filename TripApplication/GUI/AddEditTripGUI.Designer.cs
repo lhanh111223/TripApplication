@@ -74,7 +74,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(249, 269);
+            label4.Location = new Point(249, 312);
             label4.Name = "label4";
             label4.Size = new Size(36, 15);
             label4.TabIndex = 4;
@@ -83,7 +83,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(220, 322);
+            label5.Location = new Point(220, 263);
             label5.Name = "label5";
             label5.Size = new Size(65, 15);
             label5.TabIndex = 5;
@@ -95,15 +95,17 @@
             dtpDate.Name = "dtpDate";
             dtpDate.Size = new Size(174, 23);
             dtpDate.TabIndex = 1;
+            dtpDate.ValueChanged += dtpDate_ValueChanged;
             dtpDate.Leave += dtpDate_Leave;
             // 
             // cboLimo
             // 
             cboLimo.FormattingEnabled = true;
-            cboLimo.Location = new Point(311, 319);
+            cboLimo.Location = new Point(311, 260);
             cboLimo.Name = "cboLimo";
             cboLimo.Size = new Size(174, 23);
             cboLimo.TabIndex = 7;
+            cboLimo.SelectedValueChanged += cboLimo_SelectedIndexChanged;
             cboLimo.Leave += cboLimo_Leave;
             // 
             // cboSlot
@@ -114,15 +116,16 @@
             cboSlot.Name = "cboSlot";
             cboSlot.Size = new Size(174, 23);
             cboSlot.TabIndex = 8;
+            cboSlot.SelectedIndexChanged += cboSlot_SelectedIndexChanged;
             cboSlot.Leave += cboSlot_Leave;
             // 
             // numPrice
             // 
-            numPrice.Location = new Point(311, 267);
+            numPrice.Location = new Point(311, 310);
             numPrice.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numPrice.Name = "numPrice";
             numPrice.Size = new Size(174, 23);
-            numPrice.TabIndex = 9;
+            numPrice.TabIndex = 1;
             numPrice.Leave += numPrice_Leave;
             // 
             // button1
@@ -133,15 +136,17 @@
             button1.TabIndex = 10;
             button1.Text = "Save";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // btnBack
             // 
             btnBack.Location = new Point(410, 396);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(75, 23);
-            btnBack.TabIndex = 11;
+            btnBack.TabIndex = 3;
             btnBack.Text = "Cancel";
             btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
             // 
             // labelTitle
             // 
@@ -160,7 +165,8 @@
             cboTrip.Location = new Point(311, 110);
             cboTrip.Name = "cboTrip";
             cboTrip.Size = new Size(174, 23);
-            cboTrip.TabIndex = 1;
+            cboTrip.TabIndex = 2;
+            cboTrip.SelectedValueChanged += cboTrip_SelectedValueChanged;
             cboTrip.Leave += cboTrip_Leave;
             // 
             // AddEditTripGUI
@@ -168,6 +174,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            ControlBox = false;
             Controls.Add(cboTrip);
             Controls.Add(labelTitle);
             Controls.Add(btnBack);
@@ -184,6 +191,7 @@
             Name = "AddEditTripGUI";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AddEditTripGUI";
+            Load += AddEditTripGUI_Load;
             ((System.ComponentModel.ISupportInitialize)numPrice).EndInit();
             ResumeLayout(false);
             PerformLayout();

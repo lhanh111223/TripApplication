@@ -149,7 +149,7 @@ namespace TripApplication.GUI
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            MainGUI main = new MainGUI("admin");
+            MainGUI main = new MainGUI("admin", "admin");
             main.Show();
             this.Close();
         }
@@ -164,12 +164,12 @@ namespace TripApplication.GUI
 
         private void numRow_Leave(object sender, EventArgs e)
         {
-            if(numRow.Value < 5)
+            if (numRow.Value < 5)
             {
                 MessageBox.Show("The number of seats row must be between 5 to 10");
                 numRow.Value = 5;
             }
-            if(numRow.Value > 10)
+            if (numRow.Value > 10)
             {
                 MessageBox.Show("The number of seats row must be between 5 to 10");
                 numRow.Value = 10;

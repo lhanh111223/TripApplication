@@ -36,16 +36,15 @@
             menuStrip1 = new MenuStrip();
             logoutadminToolStripMenuItem = new ToolStripMenuItem();
             btnTrip = new Button();
-            btnBooking = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // btnRoute
             // 
             btnRoute.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            btnRoute.Location = new Point(173, 190);
+            btnRoute.Location = new Point(131, 234);
             btnRoute.Name = "btnRoute";
-            btnRoute.Size = new Size(141, 88);
+            btnRoute.Size = new Size(141, 84);
             btnRoute.TabIndex = 0;
             btnRoute.Text = "Manage Route";
             btnRoute.UseVisualStyleBackColor = true;
@@ -54,7 +53,7 @@
             // btnLimousine
             // 
             btnLimousine.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            btnLimousine.Location = new Point(489, 190);
+            btnLimousine.Location = new Point(539, 232);
             btnLimousine.Name = "btnLimousine";
             btnLimousine.Size = new Size(145, 88);
             btnLimousine.TabIndex = 2;
@@ -105,7 +104,7 @@
             // btnTrip
             // 
             btnTrip.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            btnTrip.Location = new Point(173, 339);
+            btnTrip.Location = new Point(334, 234);
             btnTrip.Name = "btnTrip";
             btnTrip.Size = new Size(141, 84);
             btnTrip.TabIndex = 6;
@@ -113,23 +112,13 @@
             btnTrip.UseVisualStyleBackColor = true;
             btnTrip.Click += btnTrip_Click;
             // 
-            // btnBooking
-            // 
-            btnBooking.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            btnBooking.Location = new Point(489, 339);
-            btnBooking.Name = "btnBooking";
-            btnBooking.Size = new Size(145, 84);
-            btnBooking.TabIndex = 7;
-            btnBooking.Text = "Manage Booking";
-            btnBooking.UseVisualStyleBackColor = true;
-            // 
             // MainGUI
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(816, 450);
-            Controls.Add(btnBooking);
+            ControlBox = false;
             Controls.Add(btnTrip);
             Controls.Add(labelHello);
             Controls.Add(label1);
@@ -155,6 +144,5 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem logoutadminToolStripMenuItem;
         private Button btnTrip;
-        private Button btnBooking;
     }
 }
